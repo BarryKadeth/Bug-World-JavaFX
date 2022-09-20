@@ -26,8 +26,6 @@ public class Bug extends Circle{
 	
 	public void randomMove () {
 		//reduces the energy levels of the bug
-//		System.out.println(m.primaryStage.getHeight());
-//		System.out.println(m.primaryStage.getWidth());
 		energy = energy - 0.01;
 		this.setRadius(energy);
 		Random random = new Random();
@@ -40,8 +38,8 @@ public class Bug extends Circle{
 			}
 		}
 		if (r == 1) { //South
-			if (this.getCenterY() >= m.sceneHeight - 40) {
-				this.setCenterY(m.sceneHeight - 40);
+			if (this.getCenterY() >= m.primaryStage.getHeight() - 40) { //m.sceneHeight - 40
+				this.setCenterY(m.primaryStage.getHeight() - 40);
 			} else {
 				this.setCenterY(this.getCenterY()+500/energy);
 			}
@@ -54,8 +52,8 @@ public class Bug extends Circle{
 			}
 		}
 		if (r == 3) { //West
-			if (this.getCenterX() >= m.sceneWidth - 40) {
-				this.setCenterX(m.sceneWidth - 40 );
+			if (this.getCenterX() >= m.primaryStage.getWidth() - 40) {
+				this.setCenterX(m.primaryStage.getWidth() - 40 );
 			} else {
 				this.setCenterX(this.getCenterX()+500/energy);
 			}

@@ -8,11 +8,15 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -23,10 +27,10 @@ public class Main extends Application {
 	public double sceneWidth;
 	public double sceneHeight;
 	public int clockTime = 800;
-//	public Stage primaryStage;
-//	public Stage getPrimaryStage() {
-//		return primaryStage;
-//	}
+	public Stage primaryStage;
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
 
 	private static ArrayList<Bug> bugs = new ArrayList<Bug> ();
 	private static ArrayList<Plant> plants = new ArrayList<Plant> ();
@@ -40,13 +44,21 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-//			this.primaryStage = primaryStage;
+			this.primaryStage = primaryStage;
 			Pane root = new Pane ();
+			
+			//Practice creating an image
 			Image spiderImage = new Image("spider.png",50,50,false,false);
 			ImageView iv1 = new ImageView(spiderImage);
 			iv1.setX(60);
 			iv1.setY(60);
 			root.getChildren().add(iv1);
+			
+			//Creating buttons at top:
+			Pane top = new Pane();
+			top.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+			
+			
 			
 //			Label label1 = new Label("",new ImageView(icon));
 //			
@@ -79,9 +91,7 @@ public class Main extends Application {
 			timeline.play();
 			
 			Scene scene = new Scene (root,400,400,Color.LIGHTGREEN);
-			//update sceneWidth and height for the Bug class to know
-			sceneWidth = scene.getWidth();
-			sceneHeight = scene.getHeight();
+
 			
 		//	primaryStage.setFullScreen(true);
 			primaryStage.setScene(scene);
@@ -123,9 +133,8 @@ class MyEventHandler implements EventHandler <ActionEvent>
 		{
 			p.growthSize();
 		}
-//		//update sceneWidth and height for the Bug class to know
-//		m.sceneWidth = m.getWidth();
-//		m.sceneHeight = scene.getHeight();
+
+		
 		
     }
 
