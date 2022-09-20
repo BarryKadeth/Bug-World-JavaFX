@@ -23,7 +23,11 @@ public class Main extends Application {
 	public double sceneWidth;
 	public double sceneHeight;
 	public int clockTime = 800;
-	
+//	public Stage primaryStage;
+//	public Stage getPrimaryStage() {
+//		return primaryStage;
+//	}
+
 	private static ArrayList<Bug> bugs = new ArrayList<Bug> ();
 	private static ArrayList<Plant> plants = new ArrayList<Plant> ();
 	public ArrayList<Bug> getBugs() {
@@ -36,6 +40,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
+//			this.primaryStage = primaryStage;
 			Pane root = new Pane ();
 			Image spiderImage = new Image("spider.png",50,50,false,false);
 			ImageView iv1 = new ImageView(spiderImage);
@@ -54,10 +59,10 @@ public class Main extends Application {
 				root.getChildren().add(p);
 			}
 			//List of bugs
-			bugs.add(new Bug ("A",100,100,25,Color.BLACK));
-			bugs.add(new Bug ("B",200,200,25,Color.ORANGE));
-			bugs.add(new Bug ("C",300,300,25,Color.YELLOW));
-			bugs.add(new Bug ("D",400,400,25,Color.GREEN));
+			bugs.add(new Bug ("A",100,100,25,Color.BLACK,this));
+			bugs.add(new Bug ("B",200,200,25,Color.ORANGE,this));
+			bugs.add(new Bug ("C",300,300,25,Color.YELLOW,this));
+			bugs.add(new Bug ("D",400,400,25,Color.GREEN,this));
 			for (Bug b : bugs) {
 				root.getChildren().add(b);
 			}
@@ -118,6 +123,9 @@ class MyEventHandler implements EventHandler <ActionEvent>
 		{
 			p.growthSize();
 		}
+//		//update sceneWidth and height for the Bug class to know
+//		m.sceneWidth = m.getWidth();
+//		m.sceneHeight = scene.getHeight();
 		
     }
 
