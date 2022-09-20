@@ -10,7 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -20,6 +22,7 @@ import javafx.util.Duration;
 public class Main extends Application {
 	public double sceneWidth;
 	public double sceneHeight;
+	public int clockTime = 800;
 	
 	private static ArrayList<Bug> bugs = new ArrayList<Bug> ();
 	private static ArrayList<Plant> plants = new ArrayList<Plant> ();
@@ -34,9 +37,15 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		try {
 			Pane root = new Pane ();
-			Image icon = new Image("spider.png");
+			Image spiderImage = new Image("spider.png",50,50,false,false);
+			ImageView iv1 = new ImageView(spiderImage);
+			iv1.setX(60);
+			iv1.setY(60);
+			root.getChildren().add(iv1);
 			
-			root.getChildren().add(icon);
+//			Label label1 = new Label("",new ImageView(icon));
+//			
+//			root.getChildren().add(label1);
 			
 			//List of plants 
 			plants.add(new Plant ("AA",40,40,25,Color.YELLOW));
@@ -64,7 +73,7 @@ public class Main extends Application {
 			timeline.getKeyFrames().add(frame);
 			timeline.play();
 			
-			Scene scene = new Scene (root,400,400);
+			Scene scene = new Scene (root,400,400,Color.LIGHTGREEN);
 			//update sceneWidth and height for the Bug class to know
 			sceneWidth = scene.getWidth();
 			sceneHeight = scene.getHeight();
@@ -72,33 +81,12 @@ public class Main extends Application {
 		//	primaryStage.setFullScreen(true);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Bug World");
-			primaryStage.getIcons().add(icon);
+//			primaryStage.getIcons().add(icon);
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-
-		
-//		KeyFrame frame = new KeyFrame(Duration.millis(160), new EventHandler<ActionEvent>() {
-//			
-//			
-//			@Override
-//			public void handle(ActionEvent t) {
-//
-//			
-//			}
-//			
-//		});
-//		
-//		Timeline timeline = new Timeline();
-//		timeline.setCycleCount(javafx.animation.Animation.INDEFINITE);
-//		timeline.getKeyFrames().add(frame);
-//		timeline.play();
-//		
-//		primaryStage.setTitle("Hello Animation");
-//		primaryStage.setScene(scene);
-//		primaryStage.show();
 	}
 
 	public static void main(String[] args) {
