@@ -69,16 +69,13 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		try {
 			this.primaryStage = primaryStage;
-			
 			BorderPane mainRoot = new BorderPane();
 			
 			//Root pane will have the world
-			
 			root.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 			mainRoot.setCenter(root);
 			
-			//Grass image:
-
+			//Grass image
 			backgroundImage = new BackgroundImage (grassImage,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
@@ -86,9 +83,6 @@ public class Main extends Application {
                     BackgroundSize.DEFAULT);
 			background = new Background(backgroundImage);
 			root.setBackground(background);
-			
-			
-			
 			
 			//Creating top pane: 
 			Pane top = new Pane();
@@ -98,19 +92,10 @@ public class Main extends Application {
 			
 			top.getChildren().add(playButton);
 			
-			
 			Button pauseButton = new Button("Pause World");
 			pauseButton.setPrefSize(100, 20);
 			pauseButton.setLayoutX(100);
 			top.getChildren().add(pauseButton);
-			
-			
-			//Trying to save the world
-//			Button saveButton = new Button("Save World");
-//			saveButton.setPrefSize(100, 20);
-//			saveButton.setLayoutX(200);
-//			top.getChildren().add(saveButton);
-//			mainRoot.setTop(top);
 			
 			Button addButton = new Button("Add Bug");
 			addButton.setPrefSize(100, 20);
@@ -126,8 +111,6 @@ public class Main extends Application {
 			Slider slider = new Slider(0,5,1);
 			slider.setLayoutX(400);
 			slider.setLayoutY(12);
-		//	slider.setShowTickLabels(true);
-		//	slider.setBlockIncrement(0.2f);
 			slider.setPrefSize(100, 0);
 			top.getChildren().add(slider);
 			
@@ -137,21 +120,38 @@ public class Main extends Application {
 			top.getChildren().add(textSpeed);
 			mainRoot.setTop(top);
 			
-			//Trying to add time aspect to world
-		//	final Text textTime = new Text (520,17,"Time: " + clockTime);
+			//Add time aspect to world
+
 			textTime.setFill(Color.BLACK);
 			top.getChildren().add(textTime);
 			mainRoot.setTop(top);
 			
+			//List of plants / objects
+			plants.add(new Home ("AA",900,300,250));
+			plants.add(new FlyTrap ("AA",650,100,50));
+			plants.add(new FlyTrap ("AA",650,300,50));
+			plants.add(new FlyTrap ("AA",650,500,50));
+			
+			plants.add(new Plant ("AA",50,300,25));
+			plants.add(new Plant ("AA",150,300,25));
+			plants.add(new Plant ("AA",250,300,25));
+			plants.add(new FlyTrap ("AA",350,300,35));
+			plants.add(new Plant ("AA",450,300,25));
+			plants.add(new Plant ("AA",550,300,25));
 			
 			
-//			Label label1 = new Label("",new ImageView(icon));
-//			
-//			root.getChildren().add(label1);
+			plants.add(new Plant ("AA",50,500,25));
+			plants.add(new Plant ("AA",150,500,25));
+			plants.add(new Plant ("AA",250,500,25));
+			plants.add(new Plant ("AA",350,500,25));
+			plants.add(new Plant ("AA",450,500,25));
+			plants.add(new Plant ("AA",550,500,25));
 			
-			//List of plants 
-			plants.add(new FlyTrap ("AA",40,40,25));
-			plants.add(new Plant ("BB",200,200,25));
+			
+			
+			
+			plants.add(new Beehive ("AA",100,100,90));
+			
 			for (Plant p : plants) {
 				root.getChildren().add(p);
 			}
@@ -168,10 +168,6 @@ public class Main extends Application {
 				root.getChildren().add(b);
 			}
 			
-			
-			
-			
-			
 			MyEventHandler v = new MyEventHandler(this);
 			KeyFrame frame = new KeyFrame(Duration.millis(100), v);
 			Timeline timeline = new Timeline();
@@ -179,7 +175,7 @@ public class Main extends Application {
 			timeline.getKeyFrames().add(frame);
 			timeline.play();
 			
-			Scene scene = new Scene (mainRoot,600,400,Color.LIGHTGREEN);
+			Scene scene = new Scene (mainRoot,900,600,Color.LIGHTGREEN);
 
 			//pause controls:
 			pauseButton.setOnAction(new EventHandler<ActionEvent>(){
@@ -296,12 +292,25 @@ class MyEventHandler implements EventHandler <ActionEvent>
 				Platform.exit();
 			} else if (b.getText().equals("Add Bug")) {
 				Random random = new Random();
-				int r = random.nextInt(1);
+				int r = random.nextInt(3);
+				
 				if (r == 0) {
-					Spider s = new Spider ("AAA",150,150,25,m);
+					Spider s = new Spider ("AAA",450,50,25,m);
+					m.getBugs().add(s);
+					m.getRoot().getChildren().add(s);
+				} else if (r == 1) {
+					Butterfly s = new Butterfly ("AAA",300,300,25,m);
+					m.getBugs().add(s);
+					m.getRoot().getChildren().add(s);
+				} else if (r == 2) {
+					Bee s = new Bee ("AAA",500,500,25,m);
 					m.getBugs().add(s);
 					m.getRoot().getChildren().add(s);
 				}	
+				
+				
+				
+				
 			}
 		}
     }

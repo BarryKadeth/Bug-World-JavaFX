@@ -11,5 +11,10 @@ public class FlyTrap extends Plant {
 		super(name, x, y, size);
 		this.setFill(new ImagePattern(trapImage));
 	}
+	
+	@Override
+	public void growthSize () {
+		//this cannot grow 
+	}
 
 }

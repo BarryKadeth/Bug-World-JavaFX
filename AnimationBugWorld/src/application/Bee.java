@@ -1,5 +1,7 @@
 package application;
 
+import java.util.Random;
+
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -11,5 +13,63 @@ public class Bee extends Bug {
 		super(name, x, y, energy, m);
 		this.setFill(new ImagePattern(beeImage));
 	}
+	
+	@Override
+	public void randomMove () {
+		detectFood();
+		if (energy > 20) {
+			//reduces the energy levels of the bug
+			energy = energy - 0.01;
+			this.setRadius(energy);
+			
+			if (m.clockTime > 1700 && m.clockTime < 1900) {
+				if (this.getCenterY() <= 20) {
+					this.setCenterY(0 + 40);
+				} else {
+					this.setCenterY(this.getCenterY()-500/energy);
+				}
+				if (this.getCenterX() <= 20) {
+					this.setCenterX(0+ 40);
+				} else {
+					this.setCenterX(this.getCenterX()-500/energy);
+				}
+			} else {
+				Random random = new Random();
+				int r = random.nextInt(4);
+				if (r == 0) { //North
+					if (this.getCenterY() <= 20) {
+						this.setCenterY(0 + 40);
+					} else {
+						this.setCenterY(this.getCenterY()-500/energy);
+					}
+				}
+				if (r == 1) { //South
+					if (this.getCenterY() >= m.primaryStage.getHeight() - 80) { //m.sceneHeight - 40
+						this.setCenterY(m.primaryStage.getHeight() - 80);
+					} else {
+						this.setCenterY(this.getCenterY()+500/energy);
+					}
+				}
+				if (r == 2) { //West
+					if (this.getCenterX() <= 20) {
+						this.setCenterX(0+ 40);
+					} else {
+						this.setCenterX(this.getCenterX()-500/energy);
+					}
+				}
+				if (r == 3) { //East
+					if (this.getCenterX() >= m.primaryStage.getWidth() - 40) {
+						this.setCenterX(m.primaryStage.getWidth() - 40 );
+					} else {
+						this.setCenterX(this.getCenterX()+500/energy);
+					}
+				}
+			}
+		} else {
+			this.setFill(new ImagePattern(deadImage));
+		}
+		
+	}
+	
 
 }

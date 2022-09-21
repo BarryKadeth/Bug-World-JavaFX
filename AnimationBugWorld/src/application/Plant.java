@@ -8,8 +8,10 @@ import javafx.scene.shape.Circle;
 
 public class Plant extends Circle {
 	private String name;
-	private double size; //size is the character used. 
+	protected double size; //size is the character used. 
 	private static Image image = new Image ("sunflower.png");
+	private double x;
+	private double y;
 	
 	public Plant(String name, double x, double y, double size) {
 		super (x,y,size);
@@ -22,7 +24,7 @@ public class Plant extends Circle {
 	public void growthSize () {
 		Random random = new Random();
 		int r = random.nextInt(5);
-			if (r ==1 && size < 50) {
+			if (r ==1 && size < 40) {
 				this.size = size + 1;
 				this.setRadius(size);
 			}
@@ -40,4 +42,12 @@ public class Plant extends Circle {
 	public void setSize(double size) {
 		this.size = size;
 	}
+
+	public double getX() {
+		return x;
+	}
+	public double getY() {
+		return y;
+	}
+
 }
