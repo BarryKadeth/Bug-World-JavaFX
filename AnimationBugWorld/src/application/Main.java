@@ -39,7 +39,7 @@ public class Main extends Application {
 	public double sceneHeight;
 	public int clockTime = 1200;
 	public Stage primaryStage;
-	public Text textTime = new Text (520,17,"Time: " + clockTime);
+	public Text textTime = new Text (520,20,"Time: " + clockTime);
 	Pane root = new Pane ();
 	public BackgroundImage backgroundImage;
 	Image grassImage = new Image("greenGrass.jpg");
@@ -88,6 +88,7 @@ public class Main extends Application {
 			Pane top = new Pane();
 			top.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 			Button playButton = new Button("Play World");
+			playButton.setLayoutY(2);
 			playButton.setPrefSize(100, 20);
 			
 			top.getChildren().add(playButton);
@@ -95,27 +96,30 @@ public class Main extends Application {
 			Button pauseButton = new Button("Pause World");
 			pauseButton.setPrefSize(100, 20);
 			pauseButton.setLayoutX(100);
+			pauseButton.setLayoutY(2);
 			top.getChildren().add(pauseButton);
 			
 			Button addButton = new Button("Add Bug");
 			addButton.setPrefSize(100, 20);
 			addButton.setLayoutX(200);
+			addButton.setLayoutY(2);
 			top.getChildren().add(addButton);
 			mainRoot.setTop(top);
 			
 			Button exitButton = new Button("Exit World");
 			exitButton.setPrefSize(100, 20);
 			exitButton.setLayoutX(300);
+			exitButton.setLayoutY(2);
 			top.getChildren().add(exitButton);
 			
 			Slider slider = new Slider(0,5,1);
 			slider.setLayoutX(400);
-			slider.setLayoutY(12);
+			slider.setLayoutY(14);
 			slider.setPrefSize(100, 0);
 			top.getChildren().add(slider);
 			
 			
-			final Text textSpeed = new Text (415,10,"World Speed");
+			final Text textSpeed = new Text (415,12,"World Speed");
 			textSpeed.setFill(Color.BLACK);
 			top.getChildren().add(textSpeed);
 			mainRoot.setTop(top);

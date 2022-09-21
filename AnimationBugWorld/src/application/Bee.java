@@ -19,7 +19,7 @@ public class Bee extends Bug {
 		detectFood();
 		if (energy > 20) {
 			//reduces the energy levels of the bug
-			energy = energy - 0.01;
+			energy = energy - 0.1;
 			this.setRadius(energy);
 			//Bee will move top left between 1700 and 1900 
 			if (m.clockTime > 1700 && m.clockTime < 1900) {

@@ -19,7 +19,7 @@ public class Spider extends Bug {
 		detectFood();
 		if (energy > 20) {
 			//reduces the energy levels of the bug
-			energy = energy - 0.01;
+			energy = energy - 0.1;
 			this.setRadius(energy);
 			
 			Random random1 = new Random();
