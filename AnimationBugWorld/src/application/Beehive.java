@@ -18,7 +18,7 @@ public class Beehive extends Plant {
 	public void growthSize () {
 		Random random = new Random();
 		int r = random.nextInt(30);
-			if (r ==1 && size < 80) {
+			if (r ==1 && size < 100) {
 				this.size = size + 1;
 				this.setRadius(size);
 			}

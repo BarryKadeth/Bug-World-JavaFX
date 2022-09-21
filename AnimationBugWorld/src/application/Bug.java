@@ -63,6 +63,8 @@ public class Bug extends Circle{
 				}
 			}
 		} else {
+			energy = 4;
+			this.setRadius(15);
 			this.setFill(new ImagePattern(deadImage));
 		}
 		
@@ -75,17 +77,41 @@ public class Bug extends Circle{
 						this.getCenterX() < p.getCenterX() + (p.getRadius()/2) &&
 						this.getCenterY() > p.getCenterY() - (p.getRadius()/2) &&
 						this.getCenterY() < p.getCenterY() + (p.getRadius()/2)) {
-					this.energy = 14;
-					this.setRadius(energy);
+					this.energy = 4;
+					this.setRadius(15);
 				}
-			}
-			
+			} 
 			else if (this.getCenterX() > p.getCenterX() - (p.getRadius()/2) &&
 					this.getCenterX() < p.getCenterX() + (p.getRadius()/2) &&
 					this.getCenterY() > p.getCenterY() - (p.getRadius()/2) &&
-					this.getCenterY() < p.getCenterY() + (p.getRadius()/2)) {
+					this.getCenterY() < p.getCenterY() + (p.getRadius()/2) &&
+					p instanceof Beehive
+					) {
 				this.energy = 30;
 				this.setRadius(energy);
+				p.setSize(p.getSize()-0.1);
+				p.setRadius(p.getSize());
+			} 
+			else if (this.getCenterX() > p.getCenterX() - (p.getRadius()/2) &&
+					this.getCenterX() < p.getCenterX() + (p.getRadius()/2) &&
+					this.getCenterY() > p.getCenterY() - (p.getRadius()/2) &&
+					this.getCenterY() < p.getCenterY() + (p.getRadius()/2) &&
+					p instanceof SpiderWeb
+					) {
+				this.energy = 30;
+				this.setRadius(energy);
+				p.setSize(p.getSize()-0.1);
+				p.setRadius(p.getSize());
+			} 
+			else if (this.getCenterX() > p.getCenterX() - (p.getRadius()/2) &&
+					this.getCenterX() < p.getCenterX() + (p.getRadius()/2) &&
+					this.getCenterY() > p.getCenterY() - (p.getRadius()/2) &&
+					this.getCenterY() < p.getCenterY() + (p.getRadius()/2)
+					) {
+				this.energy = 30;
+				this.setRadius(energy);
+				p.setSize(p.getSize()-10);
+				p.setRadius(p.getSize());
 			}
 		}
 	}

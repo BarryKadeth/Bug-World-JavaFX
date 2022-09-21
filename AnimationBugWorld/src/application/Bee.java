@@ -21,7 +21,7 @@ public class Bee extends Bug {
 			//reduces the energy levels of the bug
 			energy = energy - 0.01;
 			this.setRadius(energy);
-			
+			//Bee will move top left between 1700 and 1900 
 			if (m.clockTime > 1700 && m.clockTime < 1900) {
 				if (this.getCenterY() <= 20) {
 					this.setCenterY(0 + 40);
@@ -33,7 +33,20 @@ public class Bee extends Bug {
 				} else {
 					this.setCenterX(this.getCenterX()-500/energy);
 				}
+			//Bee will move down right between 500 and 600
+			} else if  (m.clockTime > 500 && m.clockTime < 650) {
+				if (this.getCenterY() >= m.primaryStage.getHeight() - 80) { //m.sceneHeight - 40
+					this.setCenterY(m.primaryStage.getHeight() - 80);
+				} else {
+					this.setCenterY(this.getCenterY()+500/energy);
+				}
+				if (this.getCenterX() >= m.primaryStage.getWidth() - 40) {
+					this.setCenterX(m.primaryStage.getWidth() - 40 );
+				} else {
+					this.setCenterX(this.getCenterX()+500/energy);
+				}
 			} else {
+			
 				Random random = new Random();
 				int r = random.nextInt(4);
 				if (r == 0) { //North
@@ -66,6 +79,8 @@ public class Bee extends Bug {
 				}
 			}
 		} else {
+			energy = 4;
+			this.setRadius(15);
 			this.setFill(new ImagePattern(deadImage));
 		}
 		

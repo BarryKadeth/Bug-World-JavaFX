@@ -56,7 +56,10 @@ public class Spider extends Bug {
 					}
 				}
 			}
+			//to fully kill them off to prevent moving tomb stones
 		} else {
+			energy = 4;
+			this.setRadius(15);
 			this.setFill(new ImagePattern(deadImage));
 		}
 		

@@ -135,8 +135,8 @@ public class Main extends Application {
 			plants.add(new Plant ("AA",50,300,25));
 			plants.add(new Plant ("AA",150,300,25));
 			plants.add(new Plant ("AA",250,300,25));
-			plants.add(new FlyTrap ("AA",350,300,35));
-			plants.add(new Plant ("AA",450,300,25));
+			plants.add(new Plant ("AA",350,300,35));
+			plants.add(new FlyTrap ("AA",450,300,40));
 			plants.add(new Plant ("AA",550,300,25));
 			
 			
@@ -151,18 +151,35 @@ public class Main extends Application {
 			
 			
 			plants.add(new Beehive ("AA",100,100,90));
+			plants.add(new SpiderWeb ("AA",400,100,90));
 			
 			for (Plant p : plants) {
 				root.getChildren().add(p);
 			}
 			
 			//List of bugs
-			bugs.add(new Spider ("A",100,100,25,this));
-			bugs.add(new Spider ("B",200,200,25,this));
+			bugs.add(new Spider ("A",400,100,25,this));
+			bugs.add(new Spider ("B",400,200,25,this));
+			bugs.add(new Spider ("A",500,100,25,this));
+			bugs.add(new Spider ("B",100,500,25,this));
+			bugs.add(new Spider ("A",400,150,25,this));
+			bugs.add(new Spider ("B",400,100,25,this));
+			
 			bugs.add(new Butterfly ("C",300,300,25,this));
 			bugs.add(new Butterfly ("C",300,300,25,this));
+			bugs.add(new Butterfly ("C",100,300,25,this));
+			bugs.add(new Butterfly ("C",100,500,25,this));
+			bugs.add(new Butterfly ("C",500,500,25,this));
+			bugs.add(new Butterfly ("C",600,500,25,this));
+			
 			bugs.add(new Bee ("D",400,400,25,this));
 			bugs.add(new Bee ("D",400,400,25,this));
+			bugs.add(new Bee ("D",500,400,25,this));
+			bugs.add(new Bee ("D",500,400,25,this));
+			bugs.add(new Bee ("D",200,200,25,this));
+			bugs.add(new Bee ("D",200,200,25,this));
+			bugs.add(new Bee ("D",800,20,25,this));
+			bugs.add(new Bee ("D",800,50,25,this));
 			
 			for (Bug b : bugs) {
 				root.getChildren().add(b);
