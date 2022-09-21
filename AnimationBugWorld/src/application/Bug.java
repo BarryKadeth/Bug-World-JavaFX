@@ -2,7 +2,8 @@ package application;
 
 import java.util.Random;
 
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 
@@ -11,17 +12,18 @@ public class Bug extends Circle{
 	private String name; 
 	private double energy;
 	private Main m;
+	private static Image image = new Image ("bug.png");
 	
 	
 	
 //	private World garden;
 	
-	public Bug (String name, double x, double y, double energy, Color c, Main m) {
+	public Bug (String name, double x, double y, double energy, Main m) {
 		super(x, y, energy);
 		this.m = m;
-		this.setFill(c);
 		this.name = name;
 		this.energy = energy;
+		this.setFill(new ImagePattern(image));
 	}
 	
 	public void randomMove () {
@@ -38,20 +40,20 @@ public class Bug extends Circle{
 			}
 		}
 		if (r == 1) { //South
-			if (this.getCenterY() >= m.primaryStage.getHeight() - 40) { //m.sceneHeight - 40
-				this.setCenterY(m.primaryStage.getHeight() - 40);
+			if (this.getCenterY() >= m.primaryStage.getHeight() - 80) { //m.sceneHeight - 40
+				this.setCenterY(m.primaryStage.getHeight() - 80);
 			} else {
 				this.setCenterY(this.getCenterY()+500/energy);
 			}
 		}
-		if (r == 2) { //East
+		if (r == 2) { //West
 			if (this.getCenterX() <= 20) {
 				this.setCenterX(0+ 40);
 			} else {
 				this.setCenterX(this.getCenterX()-500/energy);
 			}
 		}
-		if (r == 3) { //West
+		if (r == 3) { //East
 			if (this.getCenterX() >= m.primaryStage.getWidth() - 40) {
 				this.setCenterX(m.primaryStage.getWidth() - 40 );
 			} else {

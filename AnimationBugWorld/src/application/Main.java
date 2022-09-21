@@ -6,57 +6,142 @@ import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
 	public double sceneWidth;
 	public double sceneHeight;
-	public int clockTime = 800;
+	public int clockTime = 1200;
 	public Stage primaryStage;
+	public Text textTime = new Text (520,17,"Time: " + clockTime);
+	Pane root = new Pane ();
+	public BackgroundImage backgroundImage;
+	Image grassImage = new Image("greenGrass.jpg");
+	Image eveningGrassImage = new Image("EveningGrass.jpg");
+	Image nightGrassImage = new Image("NightGrass.jpg");
+	Background background;
+	
+	public Pane getRoot() {
+		return root;
+	}
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
 
 	private static ArrayList<Bug> bugs = new ArrayList<Bug> ();
 	private static ArrayList<Plant> plants = new ArrayList<Plant> ();
+	
 	public ArrayList<Bug> getBugs() {
 		return bugs;
 	}
 	public ArrayList<Plant> getPlants() {
 		return plants;
 	}
+
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
 			this.primaryStage = primaryStage;
-			Pane root = new Pane ();
 			
-			//Practice creating an image
-			Image spiderImage = new Image("spider.png",50,50,false,false);
-			ImageView iv1 = new ImageView(spiderImage);
-			iv1.setX(60);
-			iv1.setY(60);
-			root.getChildren().add(iv1);
+			BorderPane mainRoot = new BorderPane();
 			
-			//Creating buttons at top:
+			//Root pane will have the world
+			
+			root.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+			mainRoot.setCenter(root);
+			
+			//Grass image:
+
+			backgroundImage = new BackgroundImage (grassImage,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+			background = new Background(backgroundImage);
+			root.setBackground(background);
+			
+			
+			
+			
+			//Creating top pane: 
 			Pane top = new Pane();
 			top.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+			Button playButton = new Button("Play World");
+			playButton.setPrefSize(100, 20);
+			
+			top.getChildren().add(playButton);
+			
+			
+			Button pauseButton = new Button("Pause World");
+			pauseButton.setPrefSize(100, 20);
+			pauseButton.setLayoutX(100);
+			top.getChildren().add(pauseButton);
+			
+			
+			//Trying to save the world
+//			Button saveButton = new Button("Save World");
+//			saveButton.setPrefSize(100, 20);
+//			saveButton.setLayoutX(200);
+//			top.getChildren().add(saveButton);
+//			mainRoot.setTop(top);
+			
+			Button addButton = new Button("Add Bug");
+			addButton.setPrefSize(100, 20);
+			addButton.setLayoutX(200);
+			top.getChildren().add(addButton);
+			mainRoot.setTop(top);
+			
+			Button exitButton = new Button("Exit World");
+			exitButton.setPrefSize(100, 20);
+			exitButton.setLayoutX(300);
+			top.getChildren().add(exitButton);
+			
+			Slider slider = new Slider(0,5,1);
+			slider.setLayoutX(400);
+			slider.setLayoutY(12);
+		//	slider.setShowTickLabels(true);
+		//	slider.setBlockIncrement(0.2f);
+			slider.setPrefSize(100, 0);
+			top.getChildren().add(slider);
+			
+			
+			final Text textSpeed = new Text (415,10,"World Speed");
+			textSpeed.setFill(Color.BLACK);
+			top.getChildren().add(textSpeed);
+			mainRoot.setTop(top);
+			
+			//Trying to add time aspect to world
+		//	final Text textTime = new Text (520,17,"Time: " + clockTime);
+			textTime.setFill(Color.BLACK);
+			top.getChildren().add(textTime);
+			mainRoot.setTop(top);
 			
 			
 			
@@ -65,20 +150,24 @@ public class Main extends Application {
 //			root.getChildren().add(label1);
 			
 			//List of plants 
-			plants.add(new Plant ("AA",40,40,25,Color.YELLOW));
-			plants.add(new Plant ("BB",200,200,25,Color.GREEN));
+			plants.add(new FlyTrap ("AA",40,40,25));
+			plants.add(new Plant ("BB",200,200,25));
 			for (Plant p : plants) {
 				root.getChildren().add(p);
 			}
+			
 			//List of bugs
-			bugs.add(new Bug ("A",100,100,25,Color.BLACK,this));
-			bugs.add(new Bug ("B",200,200,25,Color.ORANGE,this));
-			bugs.add(new Bug ("C",300,300,25,Color.YELLOW,this));
-			bugs.add(new Bug ("D",400,400,25,Color.GREEN,this));
+			bugs.add(new Spider ("A",100,100,25,this));
+			bugs.add(new Spider ("B",200,200,25,this));
+			bugs.add(new Butterfly ("C",300,300,25,this));
+			bugs.add(new Butterfly ("C",300,300,25,this));
+			bugs.add(new Bee ("D",400,400,25,this));
+			bugs.add(new Bee ("D",400,400,25,this));
+			
 			for (Bug b : bugs) {
 				root.getChildren().add(b);
 			}
-
+			
 			
 			
 			
@@ -90,13 +179,46 @@ public class Main extends Application {
 			timeline.getKeyFrames().add(frame);
 			timeline.play();
 			
-			Scene scene = new Scene (root,400,400,Color.LIGHTGREEN);
+			Scene scene = new Scene (mainRoot,600,400,Color.LIGHTGREEN);
 
+			//pause controls:
+			pauseButton.setOnAction(new EventHandler<ActionEvent>(){
+				
+				@Override
+				public void handle (ActionEvent Arg0) {
+					timeline.pause();
+				}
+			});
+			//play controls:
+			playButton.setOnAction(new EventHandler<ActionEvent>(){
+				
+				@Override
+				public void handle (ActionEvent Arg0) {
+					timeline.play();
+				}
+			});
+			
+			exitButton.setOnAction(v);			
+			addButton.setOnAction(v);
+
+//			//Slider set up:
+	        slider.valueProperty().addListener(
+	                new ChangeListener<Number>() {
+	    
+	               public void changed(ObservableValue <? extends Number >
+	                         observable, Number oldValue, Number newValue) {
+//	            	   System.out.println(newValue);
+	                   timeline.setRate((double) newValue);
+	               }
+	           });
+			
 			
 		//	primaryStage.setFullScreen(true);
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Bug World");
-//			primaryStage.getIcons().add(icon);
+			primaryStage.setTitle("Baramey's Geographic Bug World");
+			//spider image for icon
+			Image spiderImage = new Image("spider.png",50,50,false,false);
+			primaryStage.getIcons().add(spiderImage);
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,20 +246,65 @@ class MyEventHandler implements EventHandler <ActionEvent>
 	
 	@Override
 	public void handle(ActionEvent event) {
-		for(Bug b : m.getBugs())
-		{
-//			System.out.println("Running...."+b.getName());
-			b.randomMove();
-		}
-		for(Plant p : m.getPlants())
-		{
-			p.growthSize();
-		}
-
 		
-		
+		if(event.getSource() instanceof KeyFrame) {
+			
+			if (m.clockTime < 2400 ) {
+				m.clockTime = m.clockTime + 10;
+				m.textTime.setText("Time: " + m.clockTime);
+				if (m.clockTime > 1700 && m.clockTime < 1900 || 
+						m.clockTime > 500 && m.clockTime < 800) {
+					m.backgroundImage = new BackgroundImage (m.eveningGrassImage,
+							BackgroundRepeat.NO_REPEAT,
+		                    BackgroundRepeat.NO_REPEAT,
+		                    BackgroundPosition.DEFAULT,
+		                    BackgroundSize.DEFAULT);	
+				m.background = new Background (m.backgroundImage);
+				m.root.setBackground(m.background);
+				} else if (m.clockTime > 1900) {
+					m.backgroundImage = new BackgroundImage (m.nightGrassImage,
+							BackgroundRepeat.NO_REPEAT,
+		                    BackgroundRepeat.NO_REPEAT,
+		                    BackgroundPosition.DEFAULT,
+		                    BackgroundSize.DEFAULT);	
+				m.background = new Background (m.backgroundImage);
+				m.root.setBackground(m.background);
+				} else if (m.clockTime >=800 && m.clockTime <=1700) {
+					m.backgroundImage = new BackgroundImage (m.grassImage,
+							BackgroundRepeat.NO_REPEAT,
+		                    BackgroundRepeat.NO_REPEAT,
+		                    BackgroundPosition.DEFAULT,
+		                    BackgroundSize.DEFAULT);	
+				m.background = new Background (m.backgroundImage);
+				m.root.setBackground(m.background);
+				}
+			} else if (m.clockTime >= 2400) {
+				m.clockTime = 0;
+				m.textTime.setText("Time: " + m.clockTime);
+			}
+			
+			for(Bug b : m.getBugs()) {
+				b.randomMove();
+			}
+			for(Plant p : m.getPlants()) {
+				p.growthSize();
+			}
+		}
+		else if(event.getSource() instanceof Button) {
+			Button b = (Button)event.getSource();
+			if(b.getText().equals("Exit World")) {
+				Platform.exit();
+			} else if (b.getText().equals("Add Bug")) {
+				Random random = new Random();
+				int r = random.nextInt(1);
+				if (r == 0) {
+					Spider s = new Spider ("AAA",150,150,25,m);
+					m.getBugs().add(s);
+					m.getRoot().getChildren().add(s);
+				}	
+			}
+		}
     }
-
 }
 
 

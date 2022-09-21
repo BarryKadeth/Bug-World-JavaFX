@@ -2,18 +2,20 @@ package application;
 //Baz
 import java.util.Random;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
-public class Plant extends Rectangle {
+public class Plant extends Circle {
 	private String name;
 	private double size; //size is the character used. 
+	private static Image image = new Image ("sunflower.png");
 	
-	public Plant(String name, double x, double y, double size, Color c) {
-		super (x,y,size,size);
-		this.setFill(c);
+	public Plant(String name, double x, double y, double size) {
+		super (x,y,size);
 		this.name = name;
 		this.size = size;
+		this.setFill(new ImagePattern(image));
 	}
 	
 	/**chance of growth of plant*/
@@ -22,8 +24,7 @@ public class Plant extends Rectangle {
 		int r = random.nextInt(5);
 			if (r ==1 && size < 50) {
 				this.size = size + 1;
-				this.setWidth(size);
-				this.setHeight(size);
+				this.setRadius(size);
 			}
 	}
 	
