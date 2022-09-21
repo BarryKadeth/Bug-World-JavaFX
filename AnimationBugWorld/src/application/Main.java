@@ -35,28 +35,32 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application {
+	//Attributes
 	public double sceneWidth;
 	public double sceneHeight;
 	public int clockTime = 1200;
 	public Stage primaryStage;
-	public Text textTime = new Text (520,20,"Time: " + clockTime);
+	public Text textTime = new Text (22,20,"Time: " + clockTime);
 	Pane root = new Pane ();
 	public BackgroundImage backgroundImage;
 	Image grassImage = new Image("greenGrass.jpg");
 	Image eveningGrassImage = new Image("EveningGrass.jpg");
 	Image nightGrassImage = new Image("NightGrass.jpg");
+	Image playImage = new Image("play-button.png",12,12,false,false);
 	Background background;
+	private static ArrayList<Bug> bugs = new ArrayList<Bug> ();
+	private static ArrayList<Plant> plants = new ArrayList<Plant> ();
+	private static Image butterflyImage = new Image ("butterfly.png",12,12,false,false);
+	private static Image spiderImage = new Image ("spider.png",12,12,false,false);
+	private static Image beeImage = new Image ("bee.png",12,12,false,false);
 	
+	//Getters and setters
 	public Pane getRoot() {
 		return root;
 	}
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
-
-	private static ArrayList<Bug> bugs = new ArrayList<Bug> ();
-	private static ArrayList<Plant> plants = new ArrayList<Plant> ();
-	
 	public ArrayList<Bug> getBugs() {
 		return bugs;
 	}
@@ -75,60 +79,81 @@ public class Main extends Application {
 			root.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 			mainRoot.setCenter(root);
 			
-			//Grass image
-			backgroundImage = new BackgroundImage (grassImage,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-			background = new Background(backgroundImage);
-			root.setBackground(background);
-			
 			//Creating top pane: 
 			Pane top = new Pane();
 			top.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
-			Button playButton = new Button("Play World");
-			playButton.setLayoutY(2);
-			playButton.setPrefSize(100, 20);
 			
-			top.getChildren().add(playButton);
-			
-			Button pauseButton = new Button("Pause World");
-			pauseButton.setPrefSize(100, 20);
-			pauseButton.setLayoutX(100);
-			pauseButton.setLayoutY(2);
-			top.getChildren().add(pauseButton);
-			
-			Button addButton = new Button("Add Bug");
-			addButton.setPrefSize(100, 20);
-			addButton.setLayoutX(200);
-			addButton.setLayoutY(2);
-			top.getChildren().add(addButton);
+			//Displaying the aspect of time to the world 
+			textTime.setFill(Color.BLACK);
+			top.getChildren().add(textTime);
 			mainRoot.setTop(top);
 			
-			Button exitButton = new Button("Exit World");
-			exitButton.setPrefSize(100, 20);
-			exitButton.setLayoutX(300);
-			exitButton.setLayoutY(2);
-			top.getChildren().add(exitButton);
-			
-			Slider slider = new Slider(0,5,1);
-			slider.setLayoutX(400);
-			slider.setLayoutY(14);
-			slider.setPrefSize(100, 0);
-			top.getChildren().add(slider);
-			
-			
-			final Text textSpeed = new Text (415,12,"World Speed");
+			//The title of the slider
+			final Text textSpeed = new Text (115,12,"World Speed");
 			textSpeed.setFill(Color.BLACK);
 			top.getChildren().add(textSpeed);
 			mainRoot.setTop(top);
 			
-			//Add time aspect to world
-
-			textTime.setFill(Color.BLACK);
-			top.getChildren().add(textTime);
+			//Slider characteristics
+			Slider slider = new Slider(0,5,1);
+			slider.setLayoutX(100);
+			slider.setLayoutY(14);
+			slider.setPrefSize(100, 0);
+			top.getChildren().add(slider);
+			
+			//Play button
+			Button playButton = new Button("Play World");
+			playButton.setGraphic(new ImageView(playImage));
+			playButton.setLayoutX(200);
+			playButton.setLayoutY(2);
+			playButton.setPrefSize(100, 20);
+			top.getChildren().add(playButton);
+			
+			//Pause button
+			Button pauseButton = new Button("Pause World");
+			pauseButton.setPrefSize(100, 20);
+			pauseButton.setLayoutX(300);
+			pauseButton.setLayoutY(2);
+			top.getChildren().add(pauseButton);
+			
+			//Add random bugs button
+			Button addButton = new Button("Add Bug");
+			addButton.setPrefSize(100, 20);
+			addButton.setLayoutX(400);
+			addButton.setLayoutY(2);
+			top.getChildren().add(addButton);
 			mainRoot.setTop(top);
+			
+			//Create bees
+			Button beeButton = new Button("Buzzy Bee");
+			beeButton.setGraphic(new ImageView(beeImage));
+			beeButton.setPrefSize(100, 20);
+			beeButton.setLayoutX(500);
+			beeButton.setLayoutY(2);
+			top.getChildren().add(beeButton);
+			
+			//Create bugs
+			Button butterflyButton = new Button("Butterfly");
+			butterflyButton.setGraphic(new ImageView(butterflyImage));
+			butterflyButton.setPrefSize(100, 20);
+			butterflyButton.setLayoutX(600);
+			butterflyButton.setLayoutY(2);
+			top.getChildren().add(butterflyButton);
+			
+			//Create spiders
+			Button spiderButton = new Button("Spider");
+			spiderButton.setGraphic(new ImageView(spiderImage));
+			spiderButton.setPrefSize(100, 20);
+			spiderButton.setLayoutX(700);
+			spiderButton.setLayoutY(2);
+			top.getChildren().add(spiderButton);
+
+			//Exit the program button
+			Button exitButton = new Button("Exit World");
+			exitButton.setPrefSize(100, 20);
+			exitButton.setLayoutX(800);
+			exitButton.setLayoutY(2);
+			top.getChildren().add(exitButton);
 			
 			//List of plants / objects
 			plants.add(new Home ("AA",900,300,250));
@@ -143,7 +168,6 @@ public class Main extends Application {
 			plants.add(new FlyTrap ("AA",450,300,40));
 			plants.add(new Plant ("AA",550,300,25));
 			
-			
 			plants.add(new Plant ("AA",50,500,25));
 			plants.add(new Plant ("AA",150,500,25));
 			plants.add(new Plant ("AA",250,500,25));
@@ -151,12 +175,9 @@ public class Main extends Application {
 			plants.add(new Plant ("AA",450,500,25));
 			plants.add(new Plant ("AA",550,500,25));
 			
-			
-			
-			
 			plants.add(new Beehive ("AA",100,100,90));
 			plants.add(new SpiderWeb ("AA",400,100,90));
-			
+			//Add all plants to the root
 			for (Plant p : plants) {
 				root.getChildren().add(p);
 			}
@@ -189,42 +210,67 @@ public class Main extends Application {
 				root.getChildren().add(b);
 			}
 			
+			//Event handler by frame
 			MyEventHandler v = new MyEventHandler(this);
 			KeyFrame frame = new KeyFrame(Duration.millis(100), v);
 			Timeline timeline = new Timeline();
 			timeline.setCycleCount(javafx.animation.Animation.INDEFINITE);
 			timeline.getKeyFrames().add(frame);
 			timeline.play();
-			
+			//mainRoot is the border pane
 			Scene scene = new Scene (mainRoot,900,600,Color.LIGHTGREEN);
 
 			//pause controls:
 			pauseButton.setOnAction(new EventHandler<ActionEvent>(){
-				
 				@Override
-				public void handle (ActionEvent Arg0) {
+				public void handle (ActionEvent e) {
 					timeline.pause();
 				}
 			});
 			//play controls:
 			playButton.setOnAction(new EventHandler<ActionEvent>(){
-				
 				@Override
 				public void handle (ActionEvent Arg0) {
 					timeline.play();
 				}
 			});
+			//Butterfly button
+			butterflyButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle (ActionEvent Arg0) {
+					Butterfly s = new Butterfly ("AAA",300,300,25,Main.this);
+					getBugs().add(s);
+					getRoot().getChildren().add(s);
+				}
+			});
+			//Bee button
+			beeButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle (ActionEvent Arg0) {
+					Bee s = new Bee ("AAA",80,80,25,Main.this);
+					getBugs().add(s);
+					getRoot().getChildren().add(s);
+				}
+			});
+			//Spider button
+			spiderButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle (ActionEvent Arg0) {
+					Spider s = new Spider ("AAA",450,50,25,Main.this);
+					getBugs().add(s);
+					getRoot().getChildren().add(s);
+				}
+			});
 			
+			//These are added to the class: MyEventHandler
 			exitButton.setOnAction(v);			
 			addButton.setOnAction(v);
 
-//			//Slider set up:
+//			//Slider controlling world speed:
 	        slider.valueProperty().addListener(
 	                new ChangeListener<Number>() {
-	    
 	               public void changed(ObservableValue <? extends Number >
 	                         observable, Number oldValue, Number newValue) {
-//	            	   System.out.println(newValue);
 	                   timeline.setRate((double) newValue);
 	               }
 	           });
@@ -251,13 +297,11 @@ public class Main extends Application {
 
 }
 
-class MyEventHandler implements EventHandler <ActionEvent>
-{
+class MyEventHandler implements EventHandler <ActionEvent> {
 
 	Main m;
 	
-	public MyEventHandler(Main m)
-	{
+	public MyEventHandler(Main m) {
 		this.m = m;
 	}
 	
@@ -265,7 +309,7 @@ class MyEventHandler implements EventHandler <ActionEvent>
 	public void handle(ActionEvent event) {
 		
 		if(event.getSource() instanceof KeyFrame) {
-			
+			//This adjusts the world time of the garden and changes the grass color. 
 			if (m.clockTime < 2400 ) {
 				m.clockTime = m.clockTime + 10;
 				m.textTime.setText("Time: " + m.clockTime);
@@ -299,7 +343,7 @@ class MyEventHandler implements EventHandler <ActionEvent>
 				m.clockTime = 0;
 				m.textTime.setText("Time: " + m.clockTime);
 			}
-			
+			//Bugs and plants to make a random move 
 			for(Bug b : m.getBugs()) {
 				b.randomMove();
 			}
@@ -311,10 +355,10 @@ class MyEventHandler implements EventHandler <ActionEvent>
 			Button b = (Button)event.getSource();
 			if(b.getText().equals("Exit World")) {
 				Platform.exit();
+			//Bugs are spawned in the same corresponding areas randomly of the three available bugs. 
 			} else if (b.getText().equals("Add Bug")) {
 				Random random = new Random();
 				int r = random.nextInt(3);
-				
 				if (r == 0) {
 					Spider s = new Spider ("AAA",450,50,25,m);
 					m.getBugs().add(s);
@@ -328,10 +372,6 @@ class MyEventHandler implements EventHandler <ActionEvent>
 					m.getBugs().add(s);
 					m.getRoot().getChildren().add(s);
 				}	
-				
-				
-				
-				
 			}
 		}
     }
