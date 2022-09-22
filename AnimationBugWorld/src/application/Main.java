@@ -14,7 +14,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -67,6 +70,7 @@ public class Main extends Application {
 	public ArrayList<Plant> getPlants() {
 		return plants;
 	}
+
 
 	
 	@Override
@@ -262,8 +266,22 @@ public class Main extends Application {
 				}
 			});
 			
-			//These are added to the class: MyEventHandler
-			exitButton.setOnAction(v);			
+			Alert a = new Alert(AlertType.NONE);
+			//exit controls:
+			exitButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle (ActionEvent e) {
+					a.setAlertType(AlertType.CONFIRMATION);
+					a.setContentText("Are you sure you want to exit Bug World?");
+					a.showAndWait().ifPresent(response -> {
+					     if (response == ButtonType.OK) {
+					         Platform.exit();
+					     }
+					});
+				}				
+			});
+
+			//These are added to the class: MyEventHandler		
 			addButton.setOnAction(v);
 
 //			//Slider controlling world speed:
@@ -282,6 +300,7 @@ public class Main extends Application {
 			//spider image for icon
 			Image spiderImage = new Image("spider.png",50,50,false,false);
 			primaryStage.getIcons().add(spiderImage);
+			timeline.pause();
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -292,6 +311,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
 
 
 
@@ -353,10 +373,8 @@ class MyEventHandler implements EventHandler <ActionEvent> {
 		}
 		else if(event.getSource() instanceof Button) {
 			Button b = (Button)event.getSource();
-			if(b.getText().equals("Exit World")) {
-				Platform.exit();
 			//Bugs are spawned in the same corresponding areas randomly of the three available bugs. 
-			} else if (b.getText().equals("Add Bug")) {
+			if (b.getText().equals("Add Bug")) {
 				Random random = new Random();
 				int r = random.nextInt(3);
 				if (r == 0) {
